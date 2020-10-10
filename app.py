@@ -8,14 +8,13 @@ import persistance
 # to chromedriver in your computer 
 
 def open_browser():
-    return webdriver.Chrome()
+    options = webdriver.ChromeOptions()
+    options.add_argument('user-data-dir=/home/lino/.config/chromium/Profile 2')
+    return webdriver.Chrome(executable_path='/usr/lib/chromium/chromium', chrome_options=options)
 
 
 def get_contacts():
     driver = open_browser()
-    driver.get('https://chrome.google.com/webstore/detail/snapaddy-grabber/pijkopmmbakjnkbhlhmoiakmdjomjppo')
-    driver.find_element_by_xpath('/html/body/div[5]/div[2]/div/div/div[2]/div[2]/div/div').click()
-    time.sleep(10)
     for url in readURL():
         driver.get(url) 
         WebDriverWait(driver, 600)
