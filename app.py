@@ -7,14 +7,11 @@ import persistance
 # Replace below path with the absolute path 
 # to chromedriver in your computer 
 
-def open_browser():
-    options = webdriver.ChromeOptions()
-    options.add_argument('user-data-dir=/home/lino/.config/chromium/Profile 2')
-    return webdriver.Chrome(executable_path='/usr/lib/chromium/chromium', chrome_options=options)
-
 
 def get_contacts():
-    driver = open_browser()
+    options = webdriver.ChromeOptions()
+    options.add_argument('user-data-dir=/home/lino/snap/chromium/common/chromium/Profile 1')
+    driver = webdriver.Chrome(executable_path='/snap/chromium/1328/usr/lib/chromium-browser/chrome', chrome_options=options)
     for url in readURL():
         driver.get(url) 
         WebDriverWait(driver, 600)
