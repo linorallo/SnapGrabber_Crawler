@@ -6,7 +6,7 @@ def readURL():
     return urls
 
 def writeResults(url,i):
-    f= open('list/'+str(i)+'-results+'.csv',"w+")
+    f= open('list/'+str(i)+'-results.csv',"w+")
     f.write(url+'\n')
     for i in results:
         f.write(url+', Checked'+'\n')

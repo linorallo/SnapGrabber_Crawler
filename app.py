@@ -1,5 +1,6 @@
 from selenium.webdriver.common.keys import Keys 
 from selenium.webdriver.common.by import By 
+from selenium import webdriver
 import time 
 import persistance
   
@@ -12,12 +13,19 @@ def open_browser():
 
 def get_contacts():
     driver = open_browser()
+    driver.get('https://chrome.google.com/webstore/detail/snapaddy-grabber/pijkopmmbakjnkbhlhmoiakmdjomjppo')
+    driver.find_element_by_xpath('/html/body/div[5]/div[2]/div/div/div[2]/div[2]/div/div').click()
+    time.sleep(10)
     for url in readURL():
         driver.get(url) 
         WebDriverWait(driver, 600)
-        driver.find_element_by_xpath('/html/body/div[2]/div/button[1]').click()
+        information = driver.find_element_by_class('caja_contenido_ficha').text[0]
+        print(information)
+        driver.get('chrome-extension://pijkopmmbakjnkbhlhmoiakmdjomjppo/popup_dist/index.html#/grabber/list')
+        create_contact = driver.find_element_by_class('qa-paste-contact-data animated')
+        create_contact.send_keys(information)
         WebDriverWait(driver, 600)
-        driver.window_handles[1         ]
+
 
         
 
@@ -27,28 +35,5 @@ def showContacts():
     print(contacts)
     return contacts
 
-def send(contacts, message):
-    for i in contacts:
-        search_bar = driver.find_element_by_xpath('/html/body/div[1]/div/div/div[3]/div/div[1]/div/label/div/div[2]')
-        search_bar.send_keys(i)
-        search_bar.send_keys(Keys.RETURN)
-        print(i+' seleccionade')
-        time.sleep(2)
-        for j in range(1):
-            message_box = driver.find_elements_by_xpath('/html/body/div[1]/div/div/div[4]/div/footer/div[1]/div[2]')[0]
-            message_box.send_keys(message)
-            time.sleep(1)
-            send_button = driver.find_elements_by_xpath('/html/body/div[1]/div/div/div[4]/div/footer/div[1]/div[3]/button')[0]
-            send_button.click()
-            print('Mensaje a '+i+' enviado')
-activate = ''
-while activate != 'N' and activate != 'Y':
-    activate = input('Deploy? [Y/N] ')
-    if activate == 'Y':
-        message = loadMessage()
-        contacts = showContacts()
-        send(contacts, message)
-    else:
-        driver.close()
 
 
